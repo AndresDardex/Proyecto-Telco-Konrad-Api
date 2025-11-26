@@ -1,36 +1,19 @@
 from flask import Blueprint, request, jsonify
-import uuid  # Para generar un ID único
 
-documentos_bp = Blueprint('documentos', __name__)
+documentos_bp = Blueprint('documents', __name__)
 
-# Simular almacenamiento de documentos
-document_storage = []
+# Datos quemados para documentos
+DOCUMENTS = []
 
 @documentos_bp.route('/documents', methods=['POST'])
-def document_management():
+def manage_documents():
     data = request.json
+    if not data or 'document_data' not in data:
+        return jsonify({"error": "The 'document_data' field is required"}), 400
 
-    # Validar que el campo 'document' esté presente
-    if not data or 'document' not in data:
-        return jsonify({"error": "El campo 'document' es obligatorio"}), 400
+    document_data = data['document_data']
+    if 'document_type' not in document_data or 'content' not in document_data:
+        return jsonify({"error": "The 'document_data' must contain 'document_type' and 'content'"}), 400
 
-    # Validar que el documento no esté vacío
-    document = data['document']
-    if not document.strip():
-        return jsonify({"error": "El documento no puede estar vacío"}), 400
-
-    # Validar tamaño del documento (mínimo 5 caracteres)
-    if len(document) < 5:
-        return jsonify({"error": "El documento debe tener al menos 5 caracteres"}), 400
-
-    # Generar un ID único para el documento
-    document_id = str(uuid.uuid4())
-
-    # Simular almacenamiento del documento
-    document_storage.append({"id": document_id, "content": document})
-
-    return jsonify({
-        "message": "Documento gestionado exitosamente",
-        "document_id": document_id,
-        "document": document
-    }), 200
+    DOCUMENTS.append(document_data)
+    return jsonify({"status": "success", "message": "Document managed successfully", "document_data": document_data})

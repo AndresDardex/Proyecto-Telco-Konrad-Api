@@ -1,13 +1,19 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify
 
-enrolamiento_bp = Blueprint('enrolamiento', __name__)
+enrolamiento_bp = Blueprint('enrollment', __name__)
+
+# Datos quemados para enrolamiento
+ENROLLED_USERS = []
 
 @enrolamiento_bp.route('/enrollment', methods=['POST'])
-def enrollment():
+def enroll_user():
     data = request.json
-    # Implementar lógica de enrolamiento
-    return jsonify({"message": "Enrolamiento exitoso", "data": data}), 201
+    if not data or 'user_data' not in data:
+        return jsonify({"error": "The 'user_data' field is required"}), 400
 
-@enrolamiento_bp.route('/enrollment-form', methods=['GET'])
-def enrollment_form():
-    return render_template('enrollment_form.html')
+    user_data = data['user_data']
+    if 'name' not in user_data or 'email' not in user_data:
+        return jsonify({"error": "The 'user_data' must contain 'name' and 'email'"}), 400
+
+    ENROLLED_USERS.append(user_data)
+    return jsonify({"status": "success", "message": "User enrolled successfully", "user_data": user_data})

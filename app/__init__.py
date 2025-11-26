@@ -5,9 +5,12 @@ from app.api.documentos import documentos_bp
 from app.api.contratos import contratos_bp
 from app.api.solicitudes import solicitudes_bp
 
+class Config:
+    BASE_API_URL = '/api'
+
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('app.config.Config')
+    app.config.from_object('app.config.Config')  # Cargar la configuración desde config.py
     app.config["SECRET_KEY"] = "supersecretkey"
 
     # Registrar los blueprints para los endpoints API
@@ -17,29 +20,33 @@ def create_app():
     app.register_blueprint(contratos_bp, url_prefix='/api')
     app.register_blueprint(solicitudes_bp, url_prefix='/api/requests')
 
-    # Rutas para servir las páginas HTML
+    # Rutas para servir las páginas HTML (sin prefijo /api/)
     @app.route('/')
     def index():
         return render_template('index.html')
 
-    @app.route('/validar_identidad')
-    def validar_identidad_page():
-        return render_template('validar_identidad.html')
+    @app.route('/validate_identity')
+    def validate_identity_page():
+        return render_template('validate_identity.html')
 
-    @app.route('/enrolamiento')
-    def enrolamiento_page():
-        return render_template('enrolamiento.html')
+    @app.route('/enrollment')
+    def enrollment_page():
+        return render_template('enrollment.html')
 
-    @app.route('/gestion_documentos')
-    def gestion_documentos_page():
-        return render_template('gestion_documentos.html')
+    @app.route('/document_management')
+    def document_management_page():
+        return render_template('documents.html')
 
-    @app.route('/contratos_digitales')
-    def contratos_digitales_page():
-        return render_template('contratos_digitales.html')
+    @app.route('/digital_contracts')
+    def digital_contracts_page():
+        return render_template('contracts.html')
 
-    @app.route('/estado_solicitudes')
-    def estado_solicitudes_page():
-        return render_template('estado_solicitudes.html')
+    @app.route('/request_status')
+    def request_status_page():
+        return render_template('request_status.html')
+
+    @app.context_processor
+    def inject_base_url():
+        return {'BASE_API_URL': app.config['BASE_API_URL']}  # Inyectar BASE_API_URL en los templates
 
     return app

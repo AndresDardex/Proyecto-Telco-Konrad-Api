@@ -1,21 +1,138 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Telco Konrad API{% endblock %}</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Ajusta el fondo para que cubra toda la página */
+        body {
+            background-image: url('https://png.pngtree.com/background/20250130/original/pngtree-ethereal-shadows-a-background-of-dark-textures-picture-image_13440942.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Hace que el fondo permanezca fijo al hacer scroll */
+            min-height: 100vh; /* Asegura que el fondo cubra toda la pantalla */
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+        .navbar {
+            background-color: #343a40; /* Color profesional */
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff;
+        }
+        .navbar-brand:hover {
+            color: #adb5bd;
+        }
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #adb5bd;
+        }
+        .carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+        }
+        .carousel-inner img {
+            height: 100vh;
+            object-fit: cover;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding-top: 20vh;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Hace el texto más visible */
+        }
+        .hero-content p {
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Hace el texto más visible */
+        }
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.8); /* Hace los recuadros más claros */
+            color: #000; /* Texto oscuro para contraste */
+            border: 1px solid #ccc; /* Bordes visibles */
+        }
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 1); /* Más claro al enfocar */
+            border-color: #007bff; /* Bordes azules al enfocar */
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="text-center mb-4">
-            <button class="btn btn-primary" onclick="window.location.href='/'">Inicio</button>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Telco Konrad API</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Inicio</a> <!-- Botón de Inicio -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/validate_identity">Validate Identity</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contracts">Contracts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/documents">Documents</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
+
+    <!-- Hero Content -->
+    <div class="hero-content">
+        <h1>Welcome to Telco Konrad API</h1>
+        <p>Your trusted platform for digital solutions</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
         {% block content %}
-        <!-- Aquí irá el contenido específico de cada página -->
+        <!-- Specific content for each page will go here -->
         {% endblock %}
     </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container">
+            <p>&copy; 2025 Telco Konrad API. All rights reserved.</p>
+            <p>
+                <a href="/privacy">Privacy Policy</a> | 
+                <a href="/terms">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

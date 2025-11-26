@@ -4,12 +4,22 @@
 
 {% block content %}
 <h1 class="text-center">Telco Konrad API</h1>
-<p class="text-center">Selecciona una API para interactuar:</p>
+<p class="text-center">Select an API to interact with:</p>
 <ul class="list-group">
-    <li class="list-group-item"><a href="/validar_identidad" class="btn btn-link">Validar Identidad</a></li>
-    <li class="list-group-item"><a href="/enrolamiento" class="btn btn-link">Enrolamiento</a></li>
-    <li class="list-group-item"><a href="/gestion_documentos" class="btn btn-link">Gestión de Documentos</a></li>
-    <li class="list-group-item"><a href="/contratos_digitales" class="btn btn-link">Contratos Digitales</a></li>
-    <li class="list-group-item"><a href="/estado_solicitudes" class="btn btn-link">Estado de Solicitudes</a></li>
+    <li class="list-group-item">
+        <a href="/validate_identity" class="btn btn-link">Validate Identity</a>
+    </li>
+    <li class="list-group-item">
+        <a href="/enrollment" class="btn btn-link">Enrollment</a>
+    </li>
+    <li class="list-group-item">
+        <a href="/document_management" class="btn btn-link">Document Management</a>
+    </li>
+    <li class="list-group-item">
+        <a href="/digital_contracts" class="btn btn-link">Digital Contracts</a>
+    </li>
+    <li class="list-group-item">
+        <a href="/request_status" class="btn btn-link">Request Status</a>
+    </li>
 </ul>
 {% endblock %}

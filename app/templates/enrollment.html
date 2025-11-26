@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Enrollment{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Enrollment</h1>
+<form id="enrollmentForm" class="mt-4">
+    <div class="mb-3">
+        <label for="TipoDocumento" class="form-label">Document Type</label>
+        <select id="TipoDocumento" class="form-control" required>
+            <option value="">Select Document Type</option>
+            <option value="CC">CC</option>
+            <option value="TI">TI</option>
+            <option value="CE">CE</option>
+            <option value="PT">PT</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="NumeroIdentificacion" class="form-label">Identification Number</label>
+        <input type="number" id="NumeroIdentificacion" class="form-control" placeholder="Enter your ID number" required>
+    </div>
+    <div class="mb-3">
+        <label for="PrimerNombre" class="form-label">First Name</label>
+        <input type="text" id="PrimerNombre" class="form-control" placeholder="Enter your first name" required>
+    </div>
+    <div class="mb-3">
+        <label for="SegundoNombre" class="form-label">Middle Name (Optional)</label>
+        <input type="text" id="SegundoNombre" class="form-control" placeholder="Enter your middle name">
+    </div>
+    <div class="mb-3">
+        <label for="PrimerApellido" class="form-label">Last Name</label>
+        <input type="text" id="PrimerApellido" class="form-control" placeholder="Enter your last name" required>
+    </div>
+    <div class="mb-3">
+        <label for="SegundoApellido" class="form-label">Second Last Name (Optional)</label>
+        <input type="text" id="SegundoApellido" class="form-control" placeholder="Enter your second last name">
+    </div>
+    <div class="mb-3">
+        <label for="FechaNacimiento" class="form-label">Date of Birth</label>
+        <input type="date" id="FechaNacimiento" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="Direccion" class="form-label">Address</label>
+        <input type="text" id="Direccion" class="form-control" placeholder="Enter your address" required>
+    </div>
+    <div class="mb-3">
+        <label for="Telefono" class="form-label">Phone Number</label>
+        <input type="text" id="Telefono" class="form-control" placeholder="Enter your phone number" required>
+    </div>
+    <div class="mb-3">
+        <label for="EstadoCivil" class="form-label">Marital Status</label>
+        <select id="EstadoCivil" class="form-control" required>
+            <option value="">Select Marital Status</option>
+            <option value="1">Single</option>
+            <option value="2">Married</option>
+            <option value="3">Common Law</option>
+            <option value="4">Widowed</option>
+            <option value="5">Separated</option>
+            <option value="6">Divorced</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="NivelEscolaridad" class="form-label">Education Level</label>
+        <select id="NivelEscolaridad" class="form-control" required>
+            <option value="">Select Education Level</option>
+            <option value="1">Primary</option>
+            <option value="2">High School</option>
+            <option value="3">University</option>
+            <option value="4">Postgraduate</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="Email" class="form-label">Email Address</label>
+        <input type="email" id="Email" class="form-control" placeholder="Enter your email address" required>
+    </div>
+    <button type="submit" class="btn btn-success">Register</button>
+</form>
+<div id="response" class="mt-3"></div>
+<script>
+    document.getElementById('enrollmentForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        // Obtener los valores del formulario
+        const data = {
+            TipoDocumento: document.getElementById('TipoDocumento').value,
+            NumeroIdentificacion: document.getElementById('NumeroIdentificacion').value,
+            PrimerNombre: document.getElementById('PrimerNombre').value,
+            SegundoNombre: document.getElementById('SegundoNombre').value,
+            PrimerApellido: document.getElementById('PrimerApellido').value,
+            SegundoApellido: document.getElementById('SegundoApellido').value,
+            FechaNacimiento: document.getElementById('FechaNacimiento').value,
+            Direccion: document.getElementById('Direccion').value,
+            Telefono: document.getElementById('Telefono').value,
+            EstadoCivil: document.getElementById('EstadoCivil').value,
+            NivelEscolaridad: document.getElementById('NivelEscolaridad').value,
+            Email: document.getElementById('Email').value
+        };
+
+        // Validación en el frontend
+        if (!data.TipoDocumento || !data.NumeroIdentificacion || !data.PrimerNombre || !data.PrimerApellido || !data.FechaNacimiento || !data.Direccion || !data.Telefono || !data.EstadoCivil || !data.NivelEscolaridad || !data.Email) {
+            document.getElementById('response').innerHTML = `<div class="alert alert-danger">All required fields must be filled.</div>`;
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/enrollment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_data: {
+                        TipoDocumento: document.getElementById('TipoDocumento').value,
+                        NumeroIdentificacion: document.getElementById('NumeroIdentificacion').value,
+                        PrimerNombre: document.getElementById('PrimerNombre').value,
+                        SegundoNombre: document.getElementById('SegundoNombre').value,
+                        PrimerApellido: document.getElementById('PrimerApellido').value,
+                        SegundoApellido: document.getElementById('SegundoApellido').value,
+                        FechaNacimiento: document.getElementById('FechaNacimiento').value,
+                        Direccion: document.getElementById('Direccion').value,
+                        Telefono: document.getElementById('Telefono').value,
+                        EstadoCivil: document.getElementById('EstadoCivil').value,
+                        NivelEscolaridad: document.getElementById('NivelEscolaridad').value,
+                        Email: document.getElementById('Email').value
+                    }
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                document.getElementById('response').innerHTML = `<div class="alert alert-success"><strong>Success:</strong> ${result.message}</div>`;
+            } else {
+                document.getElementById('response').innerHTML = `<div class="alert alert-danger"><strong>Error:</strong> ${result.error || result.message}</div>`;
+            }
+        } catch (error) {
+            document.getElementById('response').innerHTML = `<div class="alert alert-danger"><strong>Error:</strong> An error occurred while processing your request.</div>`;
+            console.error(error);
+        }
+    });
+</script>
+{% endblock %}
